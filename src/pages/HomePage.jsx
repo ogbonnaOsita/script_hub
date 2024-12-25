@@ -3,6 +3,7 @@ import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
 import ScriptCard from "../components/ScriptCard";
 import { IoSearch } from "react-icons/io5";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 const HomePage = () => {
   return (
     <>
@@ -93,6 +94,7 @@ const HomePage = () => {
           />
         </div>
       </section>
+      <Footer />
     </>
   );
 };
