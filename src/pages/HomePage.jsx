@@ -1,12 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
 import ScriptCard from "../components/ScriptCard";
 import { IoSearch } from "react-icons/io5";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useModal } from "../components/ModalContext";
+import { useNavigate } from "react-router-dom";
+
 const HomePage = () => {
+  const { getIsLoggedIn } = useModal();
+  const isLoggedIn = getIsLoggedIn();
+
+  console.log(isLoggedIn);
+
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "auto";
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "auto";
+    };
+  }, [isLoggedIn]);
+
   return (
-    <>
+    <div className="relative">
+      {!isLoggedIn && (
+        <div className="h-screen fixed w-full top-0 left-0 bg-black bg-opacity-90 flex items-center justify-center z-20">
+          <div className="text-center text-white">
+            <h2 className="text-3xl font-semibold mb-4">
+              Login to Access This Page
+            </h2>
+            <button
+              onClick={handleLoginClick}
+              className="bg-white text-black py-2 px-6 rounded-sm hover:bg-gray-200"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      )}
+
       <Navbar />
       <section id="ad-section" className="py-4">
         <div className="container mx-auto px-4">
@@ -95,7 +137,7 @@ const HomePage = () => {
         </div>
       </section>
       <Footer />
-    </>
+    </div>
   );
 };
 

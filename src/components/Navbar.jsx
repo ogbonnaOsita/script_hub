@@ -1,7 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useModal } from "./ModalContext";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { logout, getIsLoggedIn } = useModal();
+  const isLoggedIn = getIsLoggedIn();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <header className="py-4 border-b border-b-gray-500">
       <div className="container mx-auto flex items-center justify-between px-4">
@@ -9,27 +19,11 @@ const Navbar = () => {
           Scripts Hub
         </Link>
         <div className="flex items-center space-x-4">
-          <Link
-            to="/login"
-            className="hidden md:inline-block bg-black text-white px-4 py-2 rounded-sm"
+          <button
+            onClick={handleLogout}
+            className="bg-black text-white px-4 py-2 rounded-sm"
           >
-            Log in
-          </Link>
-          <button className="md:hidden flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
+            {isLoggedIn ? "Logout" : "Log in"}
           </button>
         </div>
       </div>

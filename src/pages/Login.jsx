@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useModal } from "../components/ModalContext";
 
 const Login = () => {
+  const { login } = useModal();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    login();
+    navigate("/");
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
       {/* Header */}
@@ -27,6 +38,8 @@ const Login = () => {
             <input
               type="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-sm shadow-sm focus:outline-none focus:ring-[0.5px] focus:ring-black focus:border-black"
             />
           </div>
@@ -34,10 +47,14 @@ const Login = () => {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-sm shadow-sm focus:outline-none focus:ring-[0.5px] focus:ring-black focus:border-black"
             />
           </div>
-          <button className="w-full bg-black text-white py-2 rounded-sm hover:bg-gray-800 transition-colors">
+          <button 
+            onClick={handleLogin}
+            className="w-full bg-black text-white py-2 rounded-sm hover:bg-gray-800 transition-colors">
             Login
           </button>
 
